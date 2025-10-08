@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.ehcache.org/v3"
+        xmlns:jsr107="http://www.ehcache.org/v3/jsr107"
+        xsi:schemaLocation="
+            http://www.ehcache.org/v3 http://www.ehcache.org/schema/ehcache-core-3.0.xsd
+            http://www.ehcache.org/v3/jsr107 http://www.ehcache.org/schema/ehcache-107-ext-3.0.xsd">
+
+    <service>
+        <jsr107:defaults enable-management="true" enable-statistics="true">
+            <jsr107:cache name="rate-limit-buckets" template="heap-cache"/>
+        </jsr107:defaults>
+    </service>
+
+    <cache-template name="heap-cache">
+        <expiry>
+            <ttl unit="hours">1</ttl>
+        </expiry>
+        <resources>
+            <heap unit="entries">10000</heap>
+        </resources>
+    </cache-template>
+
+    <cache alias="rate-limit-buckets" uses-template="heap-cache">
+        <expiry>
+            <ttl unit="hours">1</ttl>
+        </expiry>
+    </cache>
+
+</config>
